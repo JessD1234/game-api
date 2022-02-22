@@ -1,4 +1,4 @@
-import storage from "./storage.js";
+//import storage from "./storage.js";
 
 document.querySelector("#newGame").onclick = loadCharacters;
 
@@ -6,7 +6,8 @@ function loadCharacters () {
 
     document.getElementById("characterGrid").innerHTML = '';
 
-    const characterList = storage.getCharacterList();
+    //const characterList = storage.getCharacterList();
+    const characterList = [{"ID": "1M", "Name": "Garrett", "District": 1, "Health": 24}, {"ID": "11F", "Name": "Shia", "District": 11, "Health": 24}];
 
     characterList.forEach(character => {
         createCharacterCard(character);
