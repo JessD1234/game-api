@@ -30,8 +30,6 @@ function createCharacterCard(character) {
 
 
     //Create health section
-    console.log(character);
-    console.log(character.Health);
     const healthValue = document.createElement('p');
     healthValue.classList.add("characterHealth");
     healthValue.innerText = "Health Points: " + character.Health;
