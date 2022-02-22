@@ -3,6 +3,7 @@ document.querySelector("#loadGame").onclick = loadCharacters;
 document.querySelector("#newGame").onclick = loadNewCharacters;
 
 function loadNewCharacters () {
+
     document.querySelector('#characterGrid').innerHTML = '';
 
     const characterList = getNewCharacterList();
@@ -29,7 +30,7 @@ function createCharacterCard(character) {
     //Create individual character div
     const characterDiv = document.createElement('div');
     characterDiv.classList.add("CharacterCard");
-    characterDiv.setAttribute('id', character.id);
+    characterDiv.setAttribute('id', character.ID);
 
     //Create character information
     const infoDiv = document.createElement('div');
@@ -37,6 +38,10 @@ function createCharacterCard(character) {
     name.innerText = character.Name;
     const district = document.createElement('p');
     district.innerText = "District: " + character.District;
+    const image = document.createElement('img');
+    image.setAttribute("src", character.ImageSource);
+    image.setAttribute("alt", "Image of District " + character.District + " Tribute");
+    infoDiv.appendChild(image);
     infoDiv.appendChild(name);
     infoDiv.appendChild(district);
 
@@ -195,15 +200,13 @@ function getCharacterList () {
 
     if(characterList) {
         characterArray = JSON.parse(characterList);
-    } else {
-        characterArray = [{"ID": "1M", "Name": "Garrett", "District": 1, "Health": 24}, {"ID": "11F", "Name": "Shia", "District": 11, "Health": 24}];
     }
 
     return characterArray;
 }
 
 function getNewCharacterList () {
-    let characterList = [{"ID": "1M", "Name": "Garrett", "District": 1, "Health": 24}, {"ID": "11F", "Name": "Shia", "District": 11, "Health": 24}];
+    let characterList = [{"ID": "1M", "Name": "Garnet", "District": 1, "Health": 25, "ImageSource": "/images/M1.png"}, {"ID": "2M", "Name": "Marshal", "District": 2, "Health": 25, "ImageSource": "/images/M2.png"}, {"ID": "3M", "Name": "Acer", "District": 3, "Health": 25, "ImageSource": "/images/M3.png"}, {"ID": "4M", "Name": "Neptune", "District": 4, "Health": 25, "ImageSource": "/images/M4.png"}, {"ID": "5M", "Name": "Watson", "District": 5, "Health": 25, "ImageSource": "/images/M5.png"}, {"ID": "6M", "Name": "Aaron", "District": 6, "Health": 25, "ImageSource": "/images/M6.png"}, {"ID": "7M", "Name": "Ash", "District": 7, "Health": 25, "ImageSource": "/images/M7.png"}, {"ID": "8M", "Name": "Rayon", "District": 8, "Health": 25, "ImageSource": "/images/M8.png"}, {"ID": "9M", "Name": "Bran", "District": 9, "Health": 25, "ImageSource": "/images/M9.png"}, {"ID": "10M", "Name": "Cooper", "District": 10, "Health": 25, "ImageSource": "/images/M10.png"}, {"ID": "11M", "Name": "Russ", "District": 11, "Health": 25, "ImageSource": "/images/M11.png"}, {"ID": "12M", "Name": "Flint", "District": 12, "Health": 25, "ImageSource": "/images/M12.png"}, {"ID": "1F", "Name": "Opal", "District": 1, "Health": 25, "ImageSource": "/images/F1.png"}, {"ID": "2F", "Name": "Artemis", "District": 2, "Health": 25, "ImageSource": "/images/F2.png"}, {"ID": "3F", "Name": "Wren", "District": 3, "Health": 25, "ImageSource": "/images/F3.png"}, {"ID": "4F", "Name": "Kallis", "District": 4, "Health": 25, "ImageSource": "/images/F4.png"}, {"ID": "5F", "Name": "Solar", "District": 5, "Health": 25, "ImageSource": "/images/F5.png"}, {"ID": "6F", "Name": "Raven", "District": 6, "Health": 25, "ImageSource": "/images/F6.png"}, {"ID": "7F", "Name": "Maple", "District": 7, "Health": 25, "ImageSource": "/images/F7.png"}, {"ID": "8F", "Name": "Polly", "District": 8, "Health": 25, "ImageSource": "/images/F8.png"}, {"ID": "9F", "Name": "Rye", "District": 9, "Health": 25, "ImageSource": "/images/F10.png"}, {"ID": "10F", "Name": "Cleave", "District": 10, "Health": 25, "ImageSource": "/images/F11.png"}, {"ID": "11F", "Name": "Shia", "District": 11, "Health": 25, "ImageSource": "/images/F11.png"}, {"ID": "12F", "Name": "Mist", "District": 12, "Health": 25, "ImageSource": "/images/F12.png"}];
 
     localStorage.setItem("characterList", JSON.stringify(characterList));
 
