@@ -50,6 +50,11 @@ function createCharacterCard(character) {
     const healthValue = document.createElement('p');
     healthValue.classList.add("characterHealth");
     healthValue.innerText = "Health Points: " + character.Health;
+
+    const minusDiv = document.createElement('div');
+    minusDiv.classList.add("minusDiv");
+    const plusDiv = document.createElement('div');
+    plusDiv.classList.add("plusDiv");
     
 
     const minusOneButton = document.createElement('button');
@@ -76,6 +81,10 @@ function createCharacterCard(character) {
     minusTenButton.innerText = "Minus 10 health";
     minusTenButton.onclick = minusHealth;
 
+    minusDiv.appendChild(minusOneButton);
+    minusDiv.appendChild(minusFiveButton);
+    minusDiv.appendChild(minusTenButton);
+
     const plusOneButton = document.createElement('button');
     const buttonOnePlusId = character.ID;
     plusOneButton.setAttribute('id', buttonOnePlusId);
@@ -100,6 +109,10 @@ function createCharacterCard(character) {
     plusTenButton.innerText = "Plus 10 health";
     plusTenButton.onclick = plusHealth;
 
+    plusDiv.appendChild(plusOneButton);
+    plusDiv.appendChild(plusFiveButton);
+    plusDiv.appendChild(plusTenButton);
+
     /* if (character.health == 0) {
         // Add overlay? What? How to indicate dead?
         // Debating creating a separate list at the bottom/top of the board listing the dead characters.
@@ -107,12 +120,8 @@ function createCharacterCard(character) {
 
     characterDiv.appendChild(infoDiv);
     characterDiv.appendChild(healthValue);
-    characterDiv.appendChild(minusOneButton);
-    characterDiv.appendChild(minusFiveButton);
-    characterDiv.appendChild(minusTenButton);
-    characterDiv.appendChild(plusOneButton);
-    characterDiv.appendChild(plusFiveButton);
-    characterDiv.appendChild(plusTenButton);
+    characterDiv.appendChild(minusDiv);
+    characterDiv.appendChild(plusDiv);
     document.querySelector('#characterGrid').appendChild(characterDiv);
 
 }
@@ -206,7 +215,7 @@ function getCharacterList () {
 }
 
 function getNewCharacterList () {
-    let characterList = [{"ID": "1M", "Name": "Garnet", "District": 1, "Health": 25, "ImageSource": "/images/M1.png"}, {"ID": "2M", "Name": "Marshal", "District": 2, "Health": 25, "ImageSource": "/images/M2.png"}, {"ID": "3M", "Name": "Acer", "District": 3, "Health": 25, "ImageSource": "/images/M3.png"}, {"ID": "4M", "Name": "Neptune", "District": 4, "Health": 25, "ImageSource": "/images/M4.png"}, {"ID": "5M", "Name": "Watson", "District": 5, "Health": 25, "ImageSource": "/images/M5.png"}, {"ID": "6M", "Name": "Aaron", "District": 6, "Health": 25, "ImageSource": "/images/M6.png"}, {"ID": "7M", "Name": "Ash", "District": 7, "Health": 25, "ImageSource": "/images/M7.png"}, {"ID": "8M", "Name": "Rayon", "District": 8, "Health": 25, "ImageSource": "/images/M8.png"}, {"ID": "9M", "Name": "Bran", "District": 9, "Health": 25, "ImageSource": "/images/M9.png"}, {"ID": "10M", "Name": "Cooper", "District": 10, "Health": 25, "ImageSource": "/images/M10.png"}, {"ID": "11M", "Name": "Russ", "District": 11, "Health": 25, "ImageSource": "/images/M11.png"}, {"ID": "12M", "Name": "Flint", "District": 12, "Health": 25, "ImageSource": "/images/M12.png"}, {"ID": "1F", "Name": "Opal", "District": 1, "Health": 25, "ImageSource": "/images/F1.png"}, {"ID": "2F", "Name": "Artemis", "District": 2, "Health": 25, "ImageSource": "/images/F2.png"}, {"ID": "3F", "Name": "Wren", "District": 3, "Health": 25, "ImageSource": "/images/F3.png"}, {"ID": "4F", "Name": "Kallis", "District": 4, "Health": 25, "ImageSource": "/images/F4.png"}, {"ID": "5F", "Name": "Solar", "District": 5, "Health": 25, "ImageSource": "/images/F5.png"}, {"ID": "6F", "Name": "Raven", "District": 6, "Health": 25, "ImageSource": "/images/F6.png"}, {"ID": "7F", "Name": "Maple", "District": 7, "Health": 25, "ImageSource": "/images/F7.png"}, {"ID": "8F", "Name": "Polly", "District": 8, "Health": 25, "ImageSource": "/images/F8.png"}, {"ID": "9F", "Name": "Rye", "District": 9, "Health": 25, "ImageSource": "/images/F10.png"}, {"ID": "10F", "Name": "Cleave", "District": 10, "Health": 25, "ImageSource": "/images/F11.png"}, {"ID": "11F", "Name": "Shia", "District": 11, "Health": 25, "ImageSource": "/images/F11.png"}, {"ID": "12F", "Name": "Mist", "District": 12, "Health": 25, "ImageSource": "/images/F12.png"}];
+    let characterList = [{"ID": "1M", "Name": "Garnet", "District": 1, "Health": 25, "ImageSource": "./images/M1.png"}, {"ID": "2M", "Name": "Marshal", "District": 2, "Health": 25, "ImageSource": "./images/M2.png"}, {"ID": "3M", "Name": "Acer", "District": 3, "Health": 25, "ImageSource": "./images/M3.png"}, {"ID": "4M", "Name": "Neptune", "District": 4, "Health": 25, "ImageSource": "./images/M4.png"}, {"ID": "5M", "Name": "Watson", "District": 5, "Health": 25, "ImageSource": "./images/M5.png"}, {"ID": "6M", "Name": "Aaron", "District": 6, "Health": 25, "ImageSource": "./images/M6.png"}, {"ID": "7M", "Name": "Ash", "District": 7, "Health": 25, "ImageSource": "./images/M7.png"}, {"ID": "8M", "Name": "Rayon", "District": 8, "Health": 25, "ImageSource": "./images/M8.png"}, {"ID": "9M", "Name": "Bran", "District": 9, "Health": 25, "ImageSource": "./images/M9.png"}, {"ID": "10M", "Name": "Cooper", "District": 10, "Health": 25, "ImageSource": "./images/M10.png"}, {"ID": "11M", "Name": "Russ", "District": 11, "Health": 25, "ImageSource": "./images/M11.png"}, {"ID": "12M", "Name": "Flint", "District": 12, "Health": 25, "ImageSource": "./images/M12.png"}, {"ID": "1F", "Name": "Opal", "District": 1, "Health": 25, "ImageSource": "./images/F1.png"}, {"ID": "2F", "Name": "Artemis", "District": 2, "Health": 25, "ImageSource": "./images/F2.png"}, {"ID": "3F", "Name": "Wren", "District": 3, "Health": 25, "ImageSource": "./images/F3.png"}, {"ID": "4F", "Name": "Kallis", "District": 4, "Health": 25, "ImageSource": "./images/F4.png"}, {"ID": "5F", "Name": "Solar", "District": 5, "Health": 25, "ImageSource": "./images/F5.png"}, {"ID": "6F", "Name": "Raven", "District": 6, "Health": 25, "ImageSource": "./images/F6.png"}, {"ID": "7F", "Name": "Maple", "District": 7, "Health": 25, "ImageSource": "./images/F7.png"}, {"ID": "8F", "Name": "Polly", "District": 8, "Health": 25, "ImageSource": "./images/F8.png"}, {"ID": "9F", "Name": "Rye", "District": 9, "Health": 25, "ImageSource": "./images/F10.png"}, {"ID": "10F", "Name": "Cleave", "District": 10, "Health": 25, "ImageSource": "./images/F11.png"}, {"ID": "11F", "Name": "Shia", "District": 11, "Health": 25, "ImageSource": "./images/F11.png"}, {"ID": "12F", "Name": "Mist", "District": 12, "Health": 25, "ImageSource": "./images/F12.png"}];
 
     localStorage.setItem("characterList", JSON.stringify(characterList));
 
