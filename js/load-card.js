@@ -1,5 +1,17 @@
 
-document.querySelector("#newGame").onclick = loadCharacters;
+document.querySelector("#loadGame").onclick = loadCharacters;
+document.querySelector("#newGame").onclick = loadNewCharacters;
+
+function loadNewCharacters () {
+    document.querySelector('#characterGrid').innerHTML = '';
+
+    const characterList = getNewCharacterList();
+
+
+    characterList.forEach(character => {
+        createCharacterCard(character);
+    }); 
+}
 
 function loadCharacters () {
     document.querySelector('#characterGrid').innerHTML = '';
@@ -36,46 +48,52 @@ function createCharacterCard(character) {
     
 
     const minusOneButton = document.createElement('button');
-    const buttonOneMinusId = "MinusOneButton" + character.ID;
+    const buttonOneMinusId = character.ID;
     minusOneButton.setAttribute('id', buttonOneMinusId);
+    minusOneButton.setAttribute('buttonType', "minusOneButton");
     minusOneButton.classList.add("buttonMinusOne");
     minusOneButton.innerText = "Minus 1 health";
     minusOneButton.onclick = minusHealth;
 
     const minusFiveButton = document.createElement('button');
-    const buttonFiveMinusId = "MinusFiveButton" + character.ID;
+    const buttonFiveMinusId = character.ID;
     minusFiveButton.setAttribute('id', buttonFiveMinusId);
+    minusFiveButton.setAttribute('buttonType', "minusFiveButton");
     minusFiveButton.classList.add("buttonMinusFive");
     minusFiveButton.innerText = "Minus 5 health";
     minusFiveButton.onclick = minusHealth;
 
     const minusTenButton = document.createElement('button');
-    const buttonTenMinusId = "MinusTenButton" + character.ID;
+    const buttonTenMinusId = character.ID;
     minusTenButton.setAttribute('id', buttonTenMinusId);
+    minusTenButton.setAttribute('buttonType', "minusTenButton");
     minusTenButton.classList.add("buttonMinusTen");
     minusTenButton.innerText = "Minus 10 health";
     minusTenButton.onclick = minusHealth;
 
     const plusOneButton = document.createElement('button');
-    const buttonOnePlusId = "PlusOneButton" + character.ID;
+    const buttonOnePlusId = character.ID;
     plusOneButton.setAttribute('id', buttonOnePlusId);
+    plusOneButton.setAttribute('buttonType', "plusOneButton");
     plusOneButton.classList.add("buttonPlusOne");
     plusOneButton.innerText = "Plus 1 health";
-   // plusOneButton.onclick = plusHealth;
+    plusOneButton.onclick = plusHealth;
 
     const plusFiveButton = document.createElement('button');
-    const buttonFivePlusId = "PlusFiveButton" + character.ID;
+    const buttonFivePlusId = character.ID;
     plusFiveButton.setAttribute('id', buttonFivePlusId);
+    plusFiveButton.setAttribute('buttonType', "plusFiveButton");
     plusFiveButton.classList.add("buttonPlusFive");
     plusFiveButton.innerText = "Plus 5 health";
-   // plusFiveButton.onclick = plusHealth;
+    plusFiveButton.onclick = plusHealth;
 
     const plusTenButton = document.createElement('button');
-    const buttonTenPlusId = "PlusTenButton" + character.ID;
+    const buttonTenPlusId = character.ID;
     plusTenButton.setAttribute('id', buttonTenPlusId);
+    plusTenButton.setAttribute('buttonType', "plusTenButton");
     plusTenButton.classList.add("buttonPlusTen");
     plusTenButton.innerText = "Plus 10 health";
-   // plusTenButton.onclick = plusHealth;
+    plusTenButton.onclick = plusHealth;
 
     /* if (character.health == 0) {
         // Add overlay? What? How to indicate dead?
@@ -94,16 +112,77 @@ function createCharacterCard(character) {
 
 }
 
-function minusHealth() {
-    const characterList = localStorage.getItem("characterList");
-    const button = e.currentTarget;
-    const buttonName = button.classList;
-    console.log(buttonName);
 
-    //I just realized this won't work, because being able to build case statements for each of the unique button items would take forever/be unrealistic. Considering there's 24 tributes and 6 buttons each, I'd be here a while. So I was thinking of adding a class as well. Select the button by the class, and then also pull in the character information based off the button ID? We need a way to save this back to the character, so maybe just set the button ID to the character's ID? Look at how I edited to-do items or the budget items for reference.
-   /*  switch (buttonId) {
-        case 
-    } */
+//Edit health values
+function minusHealth(e) {
+    const characterList = getCharacterList();
+    const button = e.currentTarget;
+    const buttonType = button.getAttribute("buttonType");
+    console.log(buttonType);
+    const buttonId = button.getAttribute("id");
+    var character;
+    for (i in characterList) {
+        if (characterList[i].ID == buttonId) {
+            character = characterList[i];
+            break;
+        }
+    }
+    let characterHealth;
+    
+    switch (buttonType) {
+
+        case "minusOneButton":
+            characterHealth = character.Health - 1;
+            editCharacter(character, characterHealth, buttonId);
+            break;
+        
+        case "minusFiveButton":
+            characterHealth = character.Health - 5;
+            editCharacter(character, characterHealth, buttonId);
+            break;
+
+        case "minusTenButton":
+            characterHealth = character.Health - 10;
+            editCharacter(character, characterHealth, buttonId);
+            break;
+
+    } 
+
+}
+
+function plusHealth(e) {
+    const characterList = getCharacterList();
+    const button = e.currentTarget;
+    const buttonType = button.getAttribute("buttonType");
+    console.log(buttonType);
+    const buttonId = button.getAttribute("id");
+    var character;
+    for (i in characterList) {
+        if (characterList[i].ID == buttonId) {
+            character = characterList[i];
+            break;
+        }
+    }
+    let characterHealth;
+    
+    switch (buttonType) {
+
+        case "plusOneButton":
+            characterHealth = character.Health + 1;
+            editCharacter(character, characterHealth, buttonId);
+            break;
+        
+        case "plusFiveButton":
+            characterHealth = character.Health + 5;
+            editCharacter(character, characterHealth, buttonId);
+            break;
+
+        case "plusTenButton":
+            characterHealth = character.Health + 10;
+            editCharacter(character, characterHealth, buttonId);
+            break;
+
+    } 
 
 }
 
@@ -123,9 +202,38 @@ function getCharacterList () {
     return characterArray;
 }
 
+function getNewCharacterList () {
+    let characterList = [{"ID": "1M", "Name": "Garrett", "District": 1, "Health": 24}, {"ID": "11F", "Name": "Shia", "District": 11, "Health": 24}];
+
+    localStorage.setItem("characterList", JSON.stringify(characterList));
+
+    return characterList;
+}
+
 function saveCharacter (character) {
     const characterList = getCharacterList();
     characterList.push(character);
     localStorage.setItem("characterList", JSON.stringify(characterList));
+    loadCharacters();
 
+}
+
+function deleteCharacter(character, id) {
+    const characterList = getCharacterList();
+    const updatedCharacters = characterList.filter(character => character.ID != id);
+    console.log(updatedCharacters);
+    localStorage.setItem("characterList", JSON.stringify(updatedCharacters));
+}
+
+function editCharacter(character, characterHealth, id) {
+    const characterList = getCharacterList(); 
+    if (character.ID === id){
+        character.Health = characterHealth;
+    } 
+    console.log(characterList)
+    console.log(character);
+    deleteCharacter(character, id);
+    saveCharacter(character);
+
+    
 }
