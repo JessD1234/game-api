@@ -4,7 +4,7 @@ document.querySelector("#newGame").onclick = loadCharacters;
 
 function loadCharacters () {
 
-    document.getElementById("characterGrid").innerHTML = '';
+    //document.getElementById("characterGrid").innerHTML = 'Start a new game:';
 
     const characterList = getCharacterList();
 
@@ -20,8 +20,11 @@ function createCharacterCard(character) {
     characterDiv.setAttribute('id', character.id);
 
     //Create health section
-    const healthValue = document.createElement('p');
-    healthValue.innerHtml(character.health);
+    console.log(character);
+    console.log(character.Health);
+    const healthValue = document.createElement('p')
+    healthValue.innerText(character.Health);
+    
 
     const minusOneButton = document.createElement('button');
     minusOneButton.innerText("Minus 1 health");
