@@ -5,9 +5,13 @@ document.querySelector("#newGame").onclick = loadNewCharacters;
 function loadNewCharacters () {
 
     document.querySelector('#characterGrid').innerHTML = '';
+   // document.querySelector('#deadCharacters').innerHTML = '';
 
     const characterList = getNewCharacterList();
 
+    //const deadCharacters = getDeadCharacters;
+
+    localStorage.removeItem("deadCharacters");
 
     characterList.forEach(character => {
         createCharacterCard(character);
@@ -16,6 +20,7 @@ function loadNewCharacters () {
 
 function loadCharacters () {
     document.querySelector('#characterGrid').innerHTML = '';
+    //document.querySelector('#deadCharacters').innerHTML = '';
 
     const characterList = getCharacterList();
 
@@ -26,6 +31,17 @@ function loadCharacters () {
 }
 
 function createCharacterCard(character) {
+    
+  /*   if (character.Health <= 0) {
+       // character.Name += " dead";
+      /*  const deadCharacters = getDeadCharacters();
+       const characterCheck = deadCharacters.find(element => element.Name = character.Name);
+       if (characterCheck == undefined) {
+           addDeadCharacter(character);
+       }
+       return;
+
+    } */
 
     //Create individual character div
     const characterDiv = document.createElement('div');
@@ -41,6 +57,15 @@ function createCharacterCard(character) {
     const image = document.createElement('img');
     image.setAttribute("src", character.ImageSource);
     image.setAttribute("alt", "Image of District " + character.District + " Tribute");
+
+    if (character.Health <= 0) {
+        image.classList.add("dead");
+        const deadLabel = document.createElement('h3');
+        deadLabel.innerText = "FALLEN";
+        deadLabel.classList.add("deadLabel");
+        infoDiv.appendChild(deadLabel);
+    }
+
     infoDiv.appendChild(image);
     infoDiv.appendChild(name);
     infoDiv.appendChild(district);
@@ -113,26 +138,46 @@ function createCharacterCard(character) {
     plusDiv.appendChild(plusFiveButton);
     plusDiv.appendChild(plusTenButton);
 
-    /* if (character.health == 0) {
-        // Add overlay? What? How to indicate dead?
-        // Debating creating a separate list at the bottom/top of the board listing the dead characters.
-    } */
-
     characterDiv.appendChild(infoDiv);
     characterDiv.appendChild(healthValue);
     characterDiv.appendChild(minusDiv);
     characterDiv.appendChild(plusDiv);
     document.querySelector('#characterGrid').appendChild(characterDiv);
-
 }
 
+//Build dead character cards 
+/* function buildDeadCharacterCards(character) {
+    //Build starting div
+    const deadCharacterDiv = document.createElement('div');
+    deadCharacterDiv.classList.add("deadCharacterCard");
+    deadCharacterDiv.setAttribute('id', character.ID + "-dead");
+
+    //Create character info
+    const infoDiv = document.createElement('div');
+    const name = document.createElement('p');
+    name.innerText = character.Name;
+    const district = document.createElement('p');
+    district.innerText = "District: " + character.District;
+    const image = document.createElement('img');
+    image.setAttribute("src", character.ImageSource);
+    image.setAttribute("alt", "Image of District " + character.District + " Tribute")
+    
+    infoDiv.appendChild(image);
+    infoDiv.appendChild(name);
+    infoDiv.appendChild(district);
+
+   
+
+    deadCharacterDiv.appendChild(infoDiv);
+    document.querySelector('#deadCharacters').appendChild(deadCharacterDiv);
+} */
 
 //Edit health values
 function minusHealth(e) {
     const characterList = getCharacterList();
     const button = e.currentTarget;
     const buttonType = button.getAttribute("buttonType");
-    console.log(buttonType);
+    //console.log(buttonType);
     const buttonId = button.getAttribute("id");
     var character;
     for (i in characterList) {
@@ -168,7 +213,7 @@ function plusHealth(e) {
     const characterList = getCharacterList();
     const button = e.currentTarget;
     const buttonType = button.getAttribute("buttonType");
-    console.log(buttonType);
+    //console.log(buttonType);
     const buttonId = button.getAttribute("id");
     var character;
     for (i in characterList) {
@@ -236,7 +281,7 @@ function saveCharacter (character) {
 function deleteCharacter(character, id) {
     const characterList = getCharacterList();
     const updatedCharacters = characterList.filter(character => character.ID != id);
-    console.log(updatedCharacters);
+    //console.log(updatedCharacters);
     localStorage.setItem("characterList", JSON.stringify(updatedCharacters));
 }
 
@@ -245,10 +290,42 @@ function editCharacter(character, characterHealth, id) {
     if (character.ID === id){
         character.Health = characterHealth;
     } 
-    console.log(characterList)
-    console.log(character);
+    //console.log(characterList)
+    //console.log(character);
     deleteCharacter(character, id);
-    saveCharacter(character);
+    saveCharacter(character); 
+}
 
+//Create and edit dead characters list
+
+function getDeadCharacters() {
+    const deadString = localStorage.getItem("deadCharacters");
+    let deadCharacters = [];
+    if (deadString) {
+        deadCharacters = JSON.parse(deadString);
+    }
+
+    return deadCharacters; 
+}
+
+function addDeadCharacter(character) {
+    const deadCharacters = getDeadCharacters();
+    /* console.log("Character I'm trying to add:");
+    console.log(character);
     
+    const deadCharacters = getDeadCharacters();
+    console.log("Current list of dead characters:");
+    console.log(deadCharacters);
+
+    const characterCheck = deadCharacters.find(element => element.Name = character.Name);
+    console.log("Result of character check:");
+    console.log(characterCheck);
+
+    if (characterCheck != undefined ) {
+        return;
+    } else { */
+        deadCharacters.push(character);
+        localStorage.setItem("deadCharacters", JSON.stringify(deadCharacters));
+       buildDeadCharacterCards(character);
+    /*}*/
 }
